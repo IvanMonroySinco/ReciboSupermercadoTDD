@@ -63,6 +63,25 @@ public class ReciboDeSupermercadoTest
         
         valorTotal.Should().Be(5.81);   
     }
+    
+    [Fact]
+    public void Dado_CarritoVacio_Cuando_AgregoMultiplesProductoElTotalDelCarrito_Debe_SerLaSumaDelValorDeCadaProducto()
+    {
+        Carrito carrito = new Carrito();
+        Producto manzanas = new Producto("Manzanas", 1.99);
+        Producto arroz = new Producto("Arroz", 2.49);
+        Producto leche = new Producto("Leche", 1.33);
+        Producto tomateCherry = new Producto("Tomate cherry", 0.69);
+        
+        carrito.agregar(manzanas);
+        carrito.agregar(arroz);
+        carrito.agregar(leche);
+        carrito.agregar(tomateCherry);
+
+        var valorTotal = carrito.CalcularTotal();
+        
+        valorTotal.Should().Be(6.5);   
+    }
  
 }
 
@@ -84,11 +103,8 @@ public class Carrito
     private List<Producto> _productos = [];
     public double CalcularTotal()
     {
-        if (_productos.Count == 3)
-            return 5.81;
-        
-        if (_productos.Count == 2)
-            return 4.48;
+        if (_productos.Count > 1 )
+            return Math.Round(_productos.Sum(p => (double)p.Precio),2);
         
         if (_productos.Count == 1)
             return _productos[0].Precio;

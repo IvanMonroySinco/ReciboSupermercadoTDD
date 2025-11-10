@@ -6,9 +6,9 @@ public class Carrito
 
     public double CalcularTotal()
     {
-        if (_productos.Count > 1 )
-            return Math.Round(_productos.Sum(p => (double)p.Key.Precio * p.Value),2);
-        
+        if (_productos.Count > 1)
+            return Math.Round(_productos.Sum(p => (double)p.Key.Precio * p.Value), 2);
+
         if (_productos.Count == 1)
             return _productos.Keys.First().Precio * _productos.First().Value;
         return 0.0;
@@ -26,6 +26,13 @@ public class Carrito
             _productos[producto] += cantidad;
             return;
         }
+
         _productos.Add(producto, cantidad);
+    }
+
+
+    public Dictionary<Producto, int> ObtenerProductos()
+    {
+        return new Dictionary<Producto, int>(_productos);
     }
 }

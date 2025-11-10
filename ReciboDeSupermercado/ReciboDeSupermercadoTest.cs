@@ -102,4 +102,21 @@ public class ReciboDeSupermercadoTest
         valorTotal.Should().Be(3.99);   
     }
     
+    [Fact]
+    public void Dado_CarritoVacio_Cuando_GeneroElRecibo_Debe_MostrarElTotalEnCero()
+    {
+        Recibo recibo = new Recibo();
+        
+        var texto = recibo.Generar();
+        
+        texto.Should().Contain("TOTAL: 0.00€");   
+    }
+}
+
+public class Recibo
+{
+    public string Generar()
+    {
+        return "TOTAL: 0.00€";
+    }
 }

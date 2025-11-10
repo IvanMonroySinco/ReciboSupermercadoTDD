@@ -27,6 +27,17 @@ public class ReciboDeSupermercadoTest
         valorTotal.Should().Be(0.99);
     }
     
+    [Fact]
+    public void Dado_CarritoVacio_Cuando_AgregoUnKiloDeManzanasConPrecio1_99ElTotalDelCarrito_Debe_Ser1_99()
+    {
+        Carrito carrito = new Carrito();
+        Producto manzanas = new Producto("Manzanas", 1.99);
+        carrito.agregar(manzanas);
+
+        var valorTotal = carrito.CalcularTotal();
+        
+        valorTotal.Should().Be(1.99);
+    }
  
 }
 
@@ -49,7 +60,7 @@ public class Carrito
     public double CalcularTotal()
     {
         if (_productos.Count == 1)
-            return 0.99;
+            return _productos[0].Precio;
         return 0.0;
     }
 

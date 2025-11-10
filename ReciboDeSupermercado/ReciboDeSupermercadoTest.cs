@@ -126,6 +126,49 @@ public class ReciboDeSupermercadoTest
         texto.Should().Contain("Leche");
         texto.Should().Contain("TOTAL: 1.33€");
     }
+    
+    [Fact]
+    public void Dado_CarritoCon2LecheConPrecio1_33YHuevosConPrecio3_50_Cuando_GeneroElRecibo_Debe_MostrarLosProductosYElTotalEn1_33()
+    {
+        Producto leche = new Producto("Leche", 1.33);
+        Producto huevos = new Producto("Huevos", 3.50);
+        _carrito.agregar(leche, 2);
+        _carrito.agregar(huevos);
+        Recibo recibo = new Recibo(_carrito);
+
+        var texto = recibo.Generar();
+
+        texto.Should().Contain("Leche");
+        texto.Should().Contain("2.66€");
+        texto.Should().Contain("Huevos");
+        texto.Should().Contain("3.50€");
+
+        texto.Should().Contain("TOTAL: 6.16€");
+    }
+    
+    [Fact]
+    public void Dado_CarritoConMultiplesProductos_Cuando_GeneroElRecibo_Debe_MostrarLosProductos()
+    {
+        Producto leche = new Producto("Leche", 1.33);
+        Producto huevos = new Producto("Huevos", 3.50);
+        Producto baterias = new Producto("Baterias", 1);
+        Producto frutosSecos = new Producto("Frutos secos", 2.8);
+        _carrito.agregar(leche, 5);
+        _carrito.agregar(huevos);
+        _carrito.agregar(baterias);
+        _carrito.agregar(frutosSecos);
+        
+        Recibo recibo = new Recibo(_carrito);
+
+        var texto = recibo.Generar();
+
+        texto.Should().Contain("Leche");
+        texto.Should().Contain("Huevos");
+        texto.Should().Contain("Baterias");
+        texto.Should().Contain("Frutos secos");
+
+        texto.Should().Contain($"TOTAL: {_carrito.CalcularTotal().ToString("F2", CultureInfo.InvariantCulture)}€");
+    }
 }
 
 public class Recibo
@@ -143,14 +186,16 @@ public class Recibo
             return "TOTAL: 0.00€";
 
         var recibo = new StringBuilder();
-        var producto = _carrito.ObtenerProductos().First();
-        var nombre = producto.Key.Nombre;
-        var cantidad = producto.Value;
-        var subtotal = producto.Key.Precio * cantidad;
+        var productos = _carrito.ObtenerProductos();
+        foreach (var producto in productos)
+        {
+            var nombre = producto.Key.Nombre;
+            var cantidad = producto.Value;
+            var subtotal = producto.Key.Precio * cantidad;
+            recibo.AppendLine($"{nombre} x {cantidad} - {subtotal.ToString("F2", CultureInfo.InvariantCulture)}€");
+        }
 
-        recibo.AppendLine($"{nombre} x {cantidad} - {subtotal.ToString("F2", CultureInfo.InvariantCulture)} ");
         recibo.AppendLine($"\nTOTAL: {_carrito.CalcularTotal().ToString("F2", CultureInfo.InvariantCulture)}€");
-        
         return recibo.ToString();
     }
 }

@@ -82,6 +82,18 @@ public class ReciboDeSupermercadoTest
         
         valorTotal.Should().Be(6.5);   
     }
+
+    [Fact]
+    public void Dado_CarritoVacio_Cuando_Agrego3LecheConPrecio1_33ElTotalDelCarrito_Debe_Ser3_99()
+    {
+        Carrito carrito = new Carrito();
+        Producto leche = new Producto("Leche", 1.33);
+        carrito.agregar(leche, 3);
+        
+        var valorTotal = carrito.CalcularTotal();
+        
+        valorTotal.Should().Be(3.99);   
+    }
  
 }
 
@@ -100,19 +112,25 @@ public class Producto
 
 public class Carrito
 {
-    private List<Producto> _productos = [];
+    private Dictionary<Producto, int> _productos = new();
+
     public double CalcularTotal()
     {
         if (_productos.Count > 1 )
-            return Math.Round(_productos.Sum(p => (double)p.Precio),2);
+            return Math.Round(_productos.Sum(p => (double)p.Key.Precio * p.Value),2);
         
         if (_productos.Count == 1)
-            return _productos[0].Precio;
+            return _productos.Keys.First().Precio * _productos.First().Value;
         return 0.0;
     }
 
     public void agregar(Producto producto)
     {
-        _productos.Add(producto);
+       agregar(producto, 1);
+    }
+
+    public void agregar(Producto producto, int cantidad)
+    {
+        _productos.Add(producto, cantidad);
     }
 }

@@ -325,4 +325,36 @@ public class ReciboDeSupermercadoTest
 
         valorTotal.Should().Be(1.59);
     }
+    
+    [Fact]
+    public void Dado_CarritoCon2BolsasDeArrozConPrecio2_49ElTotalDelCarrito_Debe_Retornar1_59()
+    {
+        Producto arroz = new Producto("Arroz", 2.49);
+        var oferta = new DescuentoPorcentual("Arroz", 10);
+        _carrito.Agregar(arroz,2);
+        _carrito.AgregarOferta(oferta);
+        
+        var valorTotal = _carrito.CalcularTotal();
+
+        valorTotal.Should().Be(4.48);
+    }
+    
+    [Fact]
+    public void Dado_CarritoCon1BolsasDeArrozConPrecio2_49Y1KiloDeManzanaConPrecio1_99ElTotalDelCarrito_Debe_Retornar2_71()
+    {
+        Producto manzanas = new Producto("Manzanas", 1.99);
+        var oferta = new DescuentoPorcentual("Manzanas", 20);
+        Producto arroz = new Producto("Arroz", 2.49);
+        var oferta1 = new DescuentoPorcentual("Arroz", 10);
+        _carrito.Agregar(arroz);
+        _carrito.Agregar(manzanas);
+        _carrito.AgregarOferta(oferta);
+        _carrito.AgregarOferta(oferta1);
+        
+        var valorTotal = _carrito.CalcularTotal();
+
+        valorTotal.Should().Be(3.83);
+    }
+    
+    
 }

@@ -15,8 +15,13 @@ public class Carrito
             var cantidad = item.Value;
             var subtotal = producto.Precio * cantidad;
 
-            if (producto.Nombre == "Manzanas" && _ofertas.Count > 0)
-                subtotal -= _ofertas[0].CalcularDescuento(producto, cantidad);
+            foreach (var oferta in _ofertas)
+            {
+                if (oferta.AplicaA(producto))
+                {
+                    subtotal -= oferta.CalcularDescuento(producto, cantidad);
+                }
+            }
 
             total += subtotal;
         }

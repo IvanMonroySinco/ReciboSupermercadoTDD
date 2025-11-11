@@ -15,4 +15,9 @@ public class DescuentoPorcentual
         var precioProducto = (producto.Precio * cantidad);
         return Math.Round(precioProducto * _porcentaje / 100, 2);
     }
+
+    public bool AplicaA(Producto producto)
+    {
+        return producto.Nombre == _nombreProducto;
+    }
 }

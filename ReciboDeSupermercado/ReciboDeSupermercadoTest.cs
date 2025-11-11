@@ -192,6 +192,17 @@ public class ReciboDeSupermercadoTest
 
     }
     
+    [Fact]
+    public void Dado_CarritoCon1BolsaDeLentejasConPrecio5_33_Cuando_CalculoElDescuentoDe15Porciento_Debe_Retornar0_8()
+    {
+        Producto lentejas = new Producto("Lentejas", 5.33);
+        var oferta = new DescuentoPorcentual("Lentejas", 15);
+
+        var descuento = oferta.CalcularDescuento(lentejas, 1);
+
+        descuento.Should().Be(0.8);
+    }
+    
 }
 
 public class DescuentoPorcentual
@@ -206,8 +217,7 @@ public class DescuentoPorcentual
 
     public double CalcularDescuento(Producto producto, int cantidad)
     {
-        if (producto.Nombre == "Arroz")
-            return 0.25;
-        return 0.4;
+        var precioProducto = (producto.Precio * cantidad);
+        return Math.Round(precioProducto * _porcentaje / 100, 2);
     }
 }

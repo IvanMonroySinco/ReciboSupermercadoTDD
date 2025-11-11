@@ -203,6 +203,16 @@ public class ReciboDeSupermercadoTest
         descuento.Should().Be(0.8);
     }
     
+    [Fact]
+    public void Dado_3KiloDeManzanasConPrecio1_99_Cuando_CalculoElDescuentoDel20Porciento_Debe_Retornar1_19()
+    {
+        Producto manzanas = new Producto("Manzanas", 1.99);
+        var oferta = new DescuentoPorcentual("Manzanas", 20);
+
+        var descuento = oferta.CalcularDescuento(manzanas, 3);
+
+        descuento.Should().Be(1.19);
+    }
 }
 
 public class DescuentoPorcentual

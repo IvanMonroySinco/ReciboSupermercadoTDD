@@ -25,7 +25,7 @@ public class ReciboDeSupermercadoTest
         double valor)
     {
         Producto producto = new Producto(nombre, valor);
-        _carrito.agregar(producto);
+        _carrito.Agregar(producto);
 
         var valorTotal = _carrito.CalcularTotal();
 
@@ -38,8 +38,8 @@ public class ReciboDeSupermercadoTest
         Producto manzanas = new Producto("Manzanas", 1.99);
         Producto arroz = new Producto("Arroz", 2.49);
 
-        _carrito.agregar(manzanas);
-        _carrito.agregar(arroz);
+        _carrito.Agregar(manzanas);
+        _carrito.Agregar(arroz);
 
         var valorTotal = _carrito.CalcularTotal();
 
@@ -53,9 +53,9 @@ public class ReciboDeSupermercadoTest
         Producto arroz = new Producto("Arroz", 2.49);
         Producto leche = new Producto("Leche", 1.33);
 
-        _carrito.agregar(manzanas);
-        _carrito.agregar(arroz);
-        _carrito.agregar(leche);
+        _carrito.Agregar(manzanas);
+        _carrito.Agregar(arroz);
+        _carrito.Agregar(leche);
 
         var valorTotal = _carrito.CalcularTotal();
 
@@ -70,10 +70,10 @@ public class ReciboDeSupermercadoTest
         Producto leche = new Producto("Leche", 1.33);
         Producto tomateCherry = new Producto("Tomate cherry", 0.69);
 
-        _carrito.agregar(manzanas);
-        _carrito.agregar(arroz);
-        _carrito.agregar(leche);
-        _carrito.agregar(tomateCherry);
+        _carrito.Agregar(manzanas);
+        _carrito.Agregar(arroz);
+        _carrito.Agregar(leche);
+        _carrito.Agregar(tomateCherry);
 
         var valorTotal = _carrito.CalcularTotal();
 
@@ -84,7 +84,7 @@ public class ReciboDeSupermercadoTest
     public void Dado_CarritoVacio_Cuando_Agrego3LecheConPrecio1_33ElTotalDelCarrito_Debe_Ser3_99()
     {
         Producto leche = new Producto("Leche", 1.33);
-        _carrito.agregar(leche, 3);
+        _carrito.Agregar(leche, 3);
 
         var valorTotal = _carrito.CalcularTotal();
 
@@ -95,8 +95,8 @@ public class ReciboDeSupermercadoTest
     public void Dado_CarritoConUnaLecheConPrecio1_33_Cuando_Agrego2LecheConPrecio1_33ElTotalDelCarrito_Debe_Ser3_99()
     {
         Producto leche = new Producto("Leche", 1.33);
-        _carrito.agregar(leche);
-        _carrito.agregar(leche, 2);
+        _carrito.Agregar(leche);
+        _carrito.Agregar(leche, 2);
 
         var valorTotal = _carrito.CalcularTotal();
 
@@ -117,7 +117,7 @@ public class ReciboDeSupermercadoTest
     public void Dado_CarritoConUnaLecheConPrecio1_33_Cuando_GeneroElRecibo_Debe_MostrarElProductoYElTotalEn1_33()
     {
         Producto leche = new Producto("Leche", 1.33);
-        _carrito.agregar(leche);
+        _carrito.Agregar(leche);
         Recibo recibo = new Recibo(_carrito);
 
         var texto = recibo.Generar();
@@ -131,8 +131,8 @@ public class ReciboDeSupermercadoTest
     {
         Producto leche = new Producto("Leche", 1.33);
         Producto huevos = new Producto("Huevos", 3.50);
-        _carrito.agregar(leche, 2);
-        _carrito.agregar(huevos);
+        _carrito.Agregar(leche, 2);
+        _carrito.Agregar(huevos);
         Recibo recibo = new Recibo(_carrito);
 
         var texto = recibo.Generar();
@@ -152,10 +152,10 @@ public class ReciboDeSupermercadoTest
         Producto huevos = new Producto("Huevos", 3.50);
         Producto baterias = new Producto("Baterias", 1);
         Producto frutosSecos = new Producto("Frutos secos", 2.8);
-        _carrito.agregar(leche, 5);
-        _carrito.agregar(huevos);
-        _carrito.agregar(baterias);
-        _carrito.agregar(frutosSecos);
+        _carrito.Agregar(leche, 5);
+        _carrito.Agregar(huevos);
+        _carrito.Agregar(baterias);
+        _carrito.Agregar(frutosSecos);
         
         Recibo recibo = new Recibo(_carrito);
 
@@ -311,5 +311,18 @@ public class ReciboDeSupermercadoTest
         var descuento = oferta.CalcularDescuento(tomates, 8);
 
         descuento.Should().Be(1.56);
+    }
+
+    [Fact]
+    public void Dado_CarritoCon1KiloDeManzanaConPrecio1_99ElTotalDelCarrito_Debe_Retornar1_59()
+    {
+        Producto manzanas = new Producto("Manzanas", 1.99);
+        var oferta = new DescuentoPorcentual("Manzanas", 20);
+        _carrito.Agregar(manzanas);
+        _carrito.AgregarOferta(oferta);
+        
+        var valorTotal = _carrito.CalcularTotal();
+
+        valorTotal.Should().Be(1.59);
     }
 }

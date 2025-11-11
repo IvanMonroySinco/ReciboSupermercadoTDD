@@ -261,7 +261,7 @@ public class ReciboDeSupermercadoTest
     [Fact]
     public void Dado_5TubosDePastaDeDientesConPrecio1_79_Cuando_CalculoElDescuentoEspecial_Debe_Retornar1_46()
     {
-        Producto pastaDeDientes = new Producto("Pasta de dientes", 0.99);
+        Producto pastaDeDientes = new Producto("Pasta de dientes", 1.79);
         var oferta = new DescuentoEspecial("Pasta de dientes", 5, 7.49);
 
         var descuento = oferta.CalcularDescuento(pastaDeDientes, 5);
@@ -272,12 +272,23 @@ public class ReciboDeSupermercadoTest
     [Fact]
     public void Dado_10TubosDePastaDeDientesConPrecio1_79_Cuando_CalculoElDescuentoEspecial_Debe_Retornar2_92()
     {
-        Producto pastaDeDientes = new Producto("Pasta de dientes", 0.99);
+        Producto pastaDeDientes = new Producto("Pasta de dientes", 1.79);
         var oferta = new DescuentoEspecial("Pasta de dientes", 5, 7.49);
 
         var descuento = oferta.CalcularDescuento(pastaDeDientes, 10);
 
         descuento.Should().Be(2.92);
+    }
+    
+    [Fact]
+    public void Dado_15TubosDePastaDeDientesConPrecio1_79_Cuando_CalculoElDescuentoEspecial_Debe_Retornar4_38()
+    {
+        Producto pastaDeDientes = new Producto("Pasta de dientes", 1.79);
+        var oferta = new DescuentoEspecial("Pasta de dientes", 5, 7.49);
+
+        var descuento = oferta.CalcularDescuento(pastaDeDientes, 15);
+
+        descuento.Should().Be(4.38);
     }
 }
 
@@ -295,9 +306,10 @@ public class DescuentoEspecial
 
     public double CalcularDescuento(Producto producto, int cantidad)
     {
-        if (cantidad == 10)
-            return 2.92;
-        return 1.46;
+        var gruposCantidades = cantidad / _cantidad;
+        var precioNormal = gruposCantidades * _cantidad * producto.Precio;
+        var precioConOferta = gruposCantidades * _precioEspecial;
+        return Math.Round(precioNormal - precioConOferta, 2);
     }
 
 }

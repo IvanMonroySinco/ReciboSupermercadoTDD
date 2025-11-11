@@ -410,5 +410,57 @@ public class ReciboDeSupermercadoTest
 
         valorTotal.Should().Be(8.48);
     }
+
+    [Fact]
+    public void
+        Dado_CarritoCon5TubosDePastaDeDientesConPrecio1_79Y2CajasTomateCherryConPrecio0_69_CuandoGeneroElRecibo_Debe_MostrarElSubTotalYLosDescuentos()
+    {
+        Producto pastaDeDientes = new Producto("Pasta de dientes", 1.79);
+        var oferta = new DescuentoEspecial("Pasta de dientes", 5, 7.49);
+        Producto tomates = new Producto("Tomate cherry", 0.69);
+        var oferta1 = new DescuentoEspecial("Tomate cherry", 2, 0.99);
+
+        _carrito.Agregar(pastaDeDientes,5);
+        _carrito.Agregar(tomates,2);
+        _carrito.AgregarOferta(oferta);
+        _carrito.AgregarOferta(oferta1);
+        Recibo recibo = new Recibo(_carrito);
+
+        var texto = recibo.Generar();
+        texto.Should().Contain("SUBTOTAL:");
+        texto.Should().Contain("DESCUENTOS:");
+        texto.Should().Contain("10.33€");
+        texto.Should().Contain("1.85€");
+        
+    }
+
+    [Fact]
+    public void Dado_CarritoCon1BolsasDeArrozConPrecio2_49Y1KiloDeManzanaConPrecio1_99Y3CepillosDeDientes_CuandoGeneroElRecibo_Debe_MostrarElSubTotalYLosDescuentos()
+    {
+        Producto manzanas = new Producto("Manzanas", 1.99);
+        var oferta = new DescuentoPorcentual("Manzanas", 20);
+        Producto arroz = new Producto("Arroz", 2.49);
+        var oferta1 = new DescuentoPorcentual("Arroz", 10);
+        Producto cepillosDeDientes = new Producto("Cepillo de dientes", 0.99);
+        var oferta2 = new DescuentoNxM("Cepillo de dientes", 3,2);
+        
+        _carrito.Agregar(arroz);
+        _carrito.Agregar(manzanas);
+        _carrito.Agregar(cepillosDeDientes,3);
+        _carrito.AgregarOferta(oferta);
+        _carrito.AgregarOferta(oferta1);
+        _carrito.AgregarOferta(oferta2);
+        
+        Recibo recibo = new Recibo(_carrito);
+
+        var texto = recibo.Generar();
+
+        texto.Should().Contain("SUBTOTAL:");
+        texto.Should().Contain("DESCUENTOS:");
+        texto.Should().Contain("5.81€");
+        texto.Should().Contain("1.64€");
+    }
+    
+    
     
 }

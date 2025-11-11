@@ -29,6 +29,11 @@ public class Carrito
         return Math.Round(total, 2);
     }
 
+    public double CalcularSubtotal()
+    {
+        return _productos.Sum(item => item.Key.Precio * item.Value);
+    }
+    
     public void Agregar(Producto producto)
     {
         Agregar(producto, 1);
@@ -54,5 +59,10 @@ public class Carrito
     public void AgregarOferta(IOferta oferta)
     {
         _ofertas.Add(oferta);
+    }
+    
+    public List<IOferta> ObtenerOfertas()
+    {
+        return new List<IOferta>(_ofertas);
     }
 }

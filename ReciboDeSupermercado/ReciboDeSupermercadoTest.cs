@@ -213,6 +213,37 @@ public class ReciboDeSupermercadoTest
 
         descuento.Should().Be(1.19);
     }
+    
+    [Fact]
+    public void Dado_3CepillosDeDientesConPrecio0_99_Cuando_CalculoElDescuentoDel3x2_Debe_Retornar0_99()
+    {
+        Producto cepilloDeDientes = new Producto("Cepillo de dientes", 0.99);
+        var oferta = new DescuentoNxM("Cepillo de dientes", 3,2);
+
+        var descuento = oferta.CalcularDescuento(cepilloDeDientes, 3);
+
+        descuento.Should().Be(0.99);
+    }
+    
+}
+
+public class DescuentoNxM
+{  
+    private readonly string _nombreProducto;
+    private readonly int _cantidadCompra;
+    private readonly int _cantidadPaga; 
+    public DescuentoNxM(string nombreProducto, int contidadCompra, int cantidadPaga)
+    {
+        _nombreProducto = nombreProducto;
+        _cantidadPaga = cantidadPaga;
+        _cantidadCompra = contidadCompra;
+    }
+    
+    public double CalcularDescuento(Producto producto, int cantidad)
+    {
+        return 0.99;
+    }
+    
 }
 
 public class DescuentoPorcentual

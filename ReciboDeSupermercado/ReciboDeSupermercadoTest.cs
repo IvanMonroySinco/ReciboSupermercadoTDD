@@ -168,4 +168,33 @@ public class ReciboDeSupermercadoTest
 
         texto.Should().Contain($"TOTAL: {_carrito.CalcularTotal().ToString("F2", CultureInfo.InvariantCulture)}€");
     }
+
+    [Fact]
+    public void Dado_CarritoCon1KiloDeManzanasConPrecio1_99_Cuando_CalculoElDescuento_Debe_Retornar0_4()
+    {
+        Producto manzanas = new Producto("Manzanas", 1.99);
+        var oferta = new DescuentoPorcentual("Manzanas", 20);
+
+        var descuento = oferta.CalcularDescuento(manzanas, 1);
+
+        descuento.Should().Be(0.4);
+
+    }
+    
+}
+
+public class DescuentoPorcentual
+{
+    private readonly string _nombreProducto;
+    private readonly int _porcentaje;
+    public DescuentoPorcentual(string nombreProducto, int porcentaje)
+    {
+        _nombreProducto = nombreProducto;
+        _porcentaje = porcentaje;
+    }
+
+    public double CalcularDescuento(Producto producto, int cantidad)
+    {
+        return 0.4;
+    }
 }

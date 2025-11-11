@@ -290,6 +290,28 @@ public class ReciboDeSupermercadoTest
 
         descuento.Should().Be(4.38);
     }
+    
+    [Fact]
+    public void Dado_2CajasDeTomateCherryConPrecio0_99_Cuando_CalculoElDescuentoEspecial_Debe_Retornar0_39()
+    {
+        Producto tomates = new Producto("Tomate cherry", 0.69);
+        var oferta = new DescuentoEspecial("Tomate cherry", 2, 0.99);
+
+        var descuento = oferta.CalcularDescuento(tomates, 2);
+
+        descuento.Should().Be(0.39);
+    }
+    
+    [Fact]
+    public void Dado_8CajasDeTomateCherryConPrecio0_99_Cuando_CalculoElDescuentoEspecial_Debe_Retornar4_56()
+    {
+        Producto tomates = new Producto("Tomate cherry", 0.69);
+        var oferta = new DescuentoEspecial("Tomate cherry", 2, 0.99);
+
+        var descuento = oferta.CalcularDescuento(tomates, 8);
+
+        descuento.Should().Be(1.56);
+    }
 }
 
 public class DescuentoEspecial

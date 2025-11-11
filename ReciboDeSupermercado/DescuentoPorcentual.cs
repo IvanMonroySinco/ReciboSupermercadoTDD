@@ -1,6 +1,6 @@
 ﻿namespace ReciboDeSupermercado;
 
-public class DescuentoPorcentual
+public class DescuentoPorcentual : IOferta
 {
     private readonly string _nombreProducto;
     private readonly int _porcentaje;

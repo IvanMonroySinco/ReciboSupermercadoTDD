@@ -356,5 +356,19 @@ public class ReciboDeSupermercadoTest
         valorTotal.Should().Be(3.83);
     }
     
+    [Fact]
+    public void Dado_CarritoCon3CepillosDeDientesConPrecio0_99ElTotalDelCarrito_Debe_Retornar1_98()
+    {
+        Producto cepillosDeDientes = new Producto("Cepillo de dientes", 0.99);
+        var oferta = new DescuentoNxM("Cepillo de dientes", 3,2);
+
+        _carrito.Agregar(cepillosDeDientes,2);
+        _carrito.AgregarOferta(oferta);
+        
+        var valorTotal = _carrito.CalcularTotal();
+
+        valorTotal.Should().Be(1.98);
+    }
+
     
 }

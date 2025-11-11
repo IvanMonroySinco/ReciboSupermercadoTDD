@@ -3,7 +3,7 @@ namespace ReciboDeSupermercado;
 public class Carrito
 {
     private Dictionary<Producto, int> _productos = new();
-    private readonly List<DescuentoPorcentual> _ofertas = new();
+    private readonly List<IOferta> _ofertas = new();
 
     public double CalcularTotal()
     {
@@ -51,7 +51,7 @@ public class Carrito
         return new Dictionary<Producto, int>(_productos);
     }
 
-    public void AgregarOferta(DescuentoPorcentual oferta)
+    public void AgregarOferta(IOferta oferta)
     {
         _ofertas.Add(oferta);
     }

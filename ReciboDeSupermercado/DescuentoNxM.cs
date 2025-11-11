@@ -1,6 +1,6 @@
 ﻿namespace ReciboDeSupermercado;
 
-public class DescuentoNxM
+public class DescuentoNxM : IOferta
 {  
     private readonly string _nombreProducto;
     private readonly int _cantidadCompra;
@@ -17,6 +17,11 @@ public class DescuentoNxM
         var gruposCantidades = cantidad / _cantidadCompra;
         var cantidadesGratis = gruposCantidades * (_cantidadCompra - _cantidadPaga);
         return Math.Round(cantidadesGratis *  producto.Precio, 2);
+    }
+    
+    public bool AplicaA(Producto producto)
+    {
+        return producto.Nombre == _nombreProducto;
     }
     
 }

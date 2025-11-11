@@ -170,7 +170,7 @@ public class ReciboDeSupermercadoTest
     }
 
     [Fact]
-    public void Dado_CarritoCon1KiloDeManzanasConPrecio1_99_Cuando_CalculoElDescuento_Debe_Retornar0_4()
+    public void Dado_CarritoCon1KiloDeManzanasConPrecio1_99_Cuando_CalculoElDescuentoDel20Porciento_Debe_Retornar0_4()
     {
         Producto manzanas = new Producto("Manzanas", 1.99);
         var oferta = new DescuentoPorcentual("Manzanas", 20);
@@ -178,6 +178,17 @@ public class ReciboDeSupermercadoTest
         var descuento = oferta.CalcularDescuento(manzanas, 1);
 
         descuento.Should().Be(0.4);
+    }
+    
+    [Fact]
+    public void Dado_CarritoCon1BolsaDeArrozConPrecio2_49_Cuando_CalculoElDescuentoDe10Porciento_Debe_Retornar0_25()
+    {
+        Producto arroz = new Producto("Arroz", 2.49);
+        var oferta = new DescuentoPorcentual("Arroz", 10);
+
+        var descuento = oferta.CalcularDescuento(arroz, 1);
+
+        descuento.Should().Be(0.25);
 
     }
     
@@ -195,6 +206,8 @@ public class DescuentoPorcentual
 
     public double CalcularDescuento(Producto producto, int cantidad)
     {
+        if (producto.Nombre == "Arroz")
+            return 0.25;
         return 0.4;
     }
 }

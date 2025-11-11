@@ -340,7 +340,7 @@ public class ReciboDeSupermercadoTest
     }
     
     [Fact]
-    public void Dado_CarritoCon1BolsasDeArrozConPrecio2_49Y1KiloDeManzanaConPrecio1_99ElTotalDelCarrito_Debe_Retornar2_71()
+    public void Dado_CarritoCon1BolsasDeArrozConPrecio2_49Y1KiloDeManzanaConPrecio1_99ElTotalDelCarrito_Debe_Retornar3_83()
     {
         Producto manzanas = new Producto("Manzanas", 1.99);
         var oferta = new DescuentoPorcentual("Manzanas", 20);
@@ -370,5 +370,27 @@ public class ReciboDeSupermercadoTest
         valorTotal.Should().Be(1.98);
     }
 
+    [Fact]
+    public void Dado_CarritoCon1BolsasDeArrozConPrecio2_49Y1KiloDeManzanaConPrecio1_99Y3CepillosDeDientesElTotalDelCarrito_Debe_Retornar5_81()
+    {
+        Producto manzanas = new Producto("Manzanas", 1.99);
+        var oferta = new DescuentoPorcentual("Manzanas", 20);
+        Producto arroz = new Producto("Arroz", 2.49);
+        var oferta1 = new DescuentoPorcentual("Arroz", 10);
+        Producto cepillosDeDientes = new Producto("Cepillo de dientes", 0.99);
+        var oferta2 = new DescuentoNxM("Cepillo de dientes", 3,2);
+        
+        _carrito.Agregar(arroz);
+        _carrito.Agregar(manzanas);
+        _carrito.Agregar(cepillosDeDientes,3);
+        _carrito.AgregarOferta(oferta);
+        _carrito.AgregarOferta(oferta1);
+        _carrito.AgregarOferta(oferta2);
+        
+        var valorTotal = _carrito.CalcularTotal();
+
+        valorTotal.Should().Be(5.81);
+    }
+    
     
 }

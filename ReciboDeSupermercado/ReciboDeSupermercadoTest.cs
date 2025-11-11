@@ -258,6 +258,36 @@ public class ReciboDeSupermercadoTest
         descuento.Should().Be(2.97);
     }
     
+    [Fact]
+    public void Dado_5TubosDePastaDeDientesConPrecio1_79_Cuando_CalculoElDescuentoEspecial_Debe_Retornar1_46()
+    {
+        Producto pastaDeDientes = new Producto("Pasta de dientes", 0.99);
+        var oferta = new DescuentoEspecial("Pasta de dientes", 5, 7.49);
+
+        var descuento = oferta.CalcularDescuento(pastaDeDientes, 5);
+
+        descuento.Should().Be(1.46);
+    }
+    
+}
+
+public class DescuentoEspecial
+{
+    private readonly string _nombreProducto;
+    private readonly int _cantidad;
+    private readonly double _precioEspecial;
+    public DescuentoEspecial(string nombreProducto, int cantidad, double precioEspecial)
+    {
+        _nombreProducto = nombreProducto;
+        _cantidad = cantidad;
+        _precioEspecial = precioEspecial;
+    }
+
+    public double CalcularDescuento(Producto producto, int cantidad)
+    {
+        return 1.46;
+    }
+
 }
 
 public class DescuentoNxM

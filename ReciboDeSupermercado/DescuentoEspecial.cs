@@ -1,6 +1,6 @@
 ﻿namespace ReciboDeSupermercado;
 
-public class DescuentoEspecial
+public class DescuentoEspecial : IOferta
 {
     private readonly string _nombreProducto;
     private readonly int _cantidad;
@@ -19,5 +19,9 @@ public class DescuentoEspecial
         var precioConOferta = gruposCantidades * _precioEspecial;
         return Math.Round(precioNormal - precioConOferta, 2);
     }
-
+    
+    public bool AplicaA(Producto producto)
+    {
+        return producto.Nombre == _nombreProducto;
+    }
 }

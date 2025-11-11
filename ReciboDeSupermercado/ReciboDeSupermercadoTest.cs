@@ -392,5 +392,23 @@ public class ReciboDeSupermercadoTest
         valorTotal.Should().Be(5.81);
     }
     
+    [Fact]
+    public void Dado_CarritoCon5TubosDePastaDeDientesConPrecio1_79Y2CajasTomateCherryConPrecio0_69ElTotalDelCarrito_Debe_Retornar8_48()
+    {
+        Producto pastaDeDientes = new Producto("Pasta de dientes", 1.79);
+        var oferta = new DescuentoEspecial("Pasta de dientes", 5, 7.49);
+        Producto tomates = new Producto("Tomate cherry", 0.69);
+        var oferta1 = new DescuentoEspecial("Tomate cherry", 2, 0.99);
+
+        
+        _carrito.Agregar(pastaDeDientes,5);
+        _carrito.Agregar(tomates,2);
+        _carrito.AgregarOferta(oferta);
+        _carrito.AgregarOferta(oferta1);
+        
+        var valorTotal = _carrito.CalcularTotal();
+
+        valorTotal.Should().Be(8.48);
+    }
     
 }
